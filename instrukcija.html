@@ -8,6 +8,28 @@
 </head>
 <body>
     <h1>Node express serveris</h1>
-    <p></p>
+    <h2>Naudojimas</h2>
+<ul>
+    <li>Susikuriamas projekto katalogas ir <em>package.json</em> byla su <em>npm init</em>.</li>
+    <li>Susikuriama darbinė JS byla <em>eserveris.js
+    </em> byla.</li>
+    <li>Express biblioteka įdiegiama su <em>npm i express</em> terminale.</li>
+    <li>Inicijavimas iš <a href="http://expressjs.com/en/starter/installing.html">Of. tinklalapio</a>: <ul><li>import express from "express";<br>
+        const app = express() //sukurta programa<br>
+        const port = 3000 // laukiama iš 3000 porto<br>
+        const web = "WEB"; // kintamasis rodo į pakatalogį "WEB"</li></ul></li>
+        <li>Nurodomas 'endpointas', kuris priima serverio užklausą ir grąžina atsakymą pagal argumentą:<ul><li>app.get('/', (req, res) => {<br>
+            res.send('Yooooh broh!')//Nusiunčia pranešimą jei ieškomas "/".
+            }) </li>
+            <li>res.send siunčia tekstinį atsakymą, pvz.: HTML kodą.</li></ul></li>
+            <li>Nurodoma serveriui atsiliepti: <ul><li>app.listen(port, () => {<br>
+            console.log(`Example app listening at http://localhost:${port}`)
+            })</li></ul></li>
+            <li>Ieškomos bylos. Ieškoma index.html byla nurodytame "web" kataloge, kai nenurodomas papildomas kelias:
+            <ul><li>app.use (express.static(web, {index:"index.html"))</li>
+            <li>app.use (express.static(web, {index:["index.html", "testCss.css"]})) // ieškoma tarp kelių bylų</li>
+            <li>Nurodžius {index:false} operacija bus praleista.</li></ul>
+        </li>
+</ul>
 </body>
 </html>
