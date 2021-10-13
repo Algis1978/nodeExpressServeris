@@ -28,7 +28,8 @@ app.get('/zmones', (req, res) => { //Nusiunčia pranešimą jei ieškomas "/zmon
   let turinys = "";
   turinys += "<html>\r\n"
   turinys += "<body>\r\n"
-  turinys += "<h1>List:</h1>\r\n"
+  turinys += "<h1>Sąrašas:</h1>\r\n"
+  turinys += "<a href='/naujas'>Naujas žmogus\r\n"; 
   turinys += "<ul>\r\n"; 
   for (const zmogus of zmones) { //forOf ciklas, iteruoja per masyvo elementus ir prideda prie turinio vertes:
     turinys +=`<li>${zmogus.vardas} ${zmogus.pavarde} ${zmogus.atlyginimas} 
@@ -39,7 +40,29 @@ app.get('/zmones', (req, res) => { //Nusiunčia pranešimą jei ieškomas "/zmon
   turinys += "</html>\r\n"
   res.send(turinys);
   //Nusiunčia pranešimą jei ieškomas "/zmones".
-}) // aka 'endpointas'
+})
+
+app.get('/naujas', (req, res) => { //Nusiunčia pranešimą jei ieškomas "/zmones".
+  let turinys = "";
+  turinys += "<html>\r\n"
+  turinys += "<body>\r\n"
+  turinys += "<h1>Naujas žmogus</h1>\r\n"
+  turinys += '<form action="/zmogusInsert" method="POST" >\r\n'
+  turinys += 'Vardas: <input type="text" name="vardas"><br>\r\n'
+  turinys += 'Pavardė: <input type="text" name="pavarde"><br>\r\n'
+  turinys += 'Atlyginimas: <input type="number" name="atlyginimas"><br>\r\n'
+  turinys += '<input type="submit" value="Save"><br>\r\n'
+  turinys += "</form>\r\n"
+  turinys += '<a href="/zmones">Atgal</a>\r\n'
+  turinys += "</body>\r\n"
+  turinys += "</html>\r\n"
+  res.send(turinys);
+  //Nusiunčia pranešimą jei ieškomas "/zmones".
+})
+
+app.post("/zmogusInsert", (req, res) => {
+  res.redirect("/zmones")
+});
 
 app.get("/trintiZmogu", (req, res) =>{
   const findId = parseInt(req.query.id);
