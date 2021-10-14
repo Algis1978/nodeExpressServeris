@@ -31,7 +31,15 @@
             <li>Nurodžius {index:false} operacija bus praleista.</li></ul>
         </li>
         <li>"app.get" metodas atsiliepia į naršyklės užklausą su GET, app.post - į užklauą su POST.</li>
-        <li>Iš formos input name lau</li>
+        <li>Formos 'input name' laukelis turi būti užpildytas. Nes su jais naršyklė formuoja užklausą.</li> 
+        <li> "Submit" type mygtuko nuspaudimas formoje suformuos "POST" tipo naršyklės užklausą.</li>
+        <li><em>express.urlencoded</em> metodas perskaito naršyklės užklausą ir ištraukia reikalingus duomenis iš POST užklausos.</li>
+            <ul><li>Pvz., užpildžius formos laukelius (su name atributais):</li> 
+            <li> app.use (express.urlencoded({extended:true})) suves duomenis į req.body objektą:</li>
+            <li>(console.log(req.body)): { vardas: 'hrhrwh', pavarde: 'whtwhh', atlyginimas: '67' }</li>
+            <li>Papildomai galima įvesti validaciją su if else išmetant lietuviškus klaidos pavadinimus (jei nepakanka HTML validacijos)</li></ul>
+        <li>Duomenis galima koreguoti. Tam reikia įvesti naują mygtuką arba nuorodą iš vardo/pavardės.</li>
+
 </ul>
 </body>
 </html>
