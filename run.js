@@ -1,5 +1,6 @@
 import express from "express";
-
+import * as fs from "fs/promises";
+import handlebars from "handlebars";
 const port = 3000
 const web = "web";
 
@@ -46,25 +47,14 @@ app.get('/index.html', (req, res) => {
     res.send("<html><body>Labas pasauli!</body></html>");
 });
 // SUKURIAMAS ENT POINTAS I ZMONIU SARA
-app.get('/zmones', (req, res) => {
-    let html = "";
-    html += "<html>\r\n";
-    html += "<body>\r\n";
-    html += "<h1>Žmonių sąrašas</h1>\r\n";
-    html += `<a href = "/zmogusEdit">Naujas</a>\r\n`;
-    html += "<ul>\r\n";
-    for (const zmogus of zmones) {
-        html +=
-            `<li>
-            <a href="/zmogusEdit?id=${zmogus.id}">${zmogus.id}${zmogus.vardas} ${zmogus.pavarde}</a> ${zmogus.alga} 
-        <a href = "/zmogusDelete?id=${zmogus.id}">&#10005</a>
-        </li>`;
-        // NURODOMI PARAMETRAI ? ID = .....
-    }
-    html += "</ul>\r\n";
-    html += "</body>";
-    html += "</html>";
-    res.send(html);
+app.get('/zmones', async (req, res) => {
+    const html = await fs.readFile("./Handlebars/zmones.handlebars", {
+        encoding:"utf8"
+    });// nuskaitomas HTML kodas iš bylos
+
+const t = handlebars.compile(html);// Po to HTML kodas sukompiliuojamas 'handlebars' modulio.
+console.log(t({zmones}));
+    res.send(t({zmones}));//nusiunčiami duomenys
 });
 
 app.get('/zmogusEdit', (req, res) => {
