@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<h1>Bibliotekos express-handlebars naudojimas</h1>   
+<ul>
+    <li>Šita biblioteka uatomatiškai skaito ir sukompiliuoja handlebarsų html'us</li>
+    <li>Įdiehiama su npm i express-handlebars.</li>
+    <li>Būtina susikurti 'views' katalogą ir jame 'layouts' katalogą.</li>
+    <li>'layouts' kataloge susikuriama 'main.handlebars' byla.</li>
+    <li>Suimportuoti į bylą.</li>
+    <li>Kad veiktų reikia įvesti:
+        <ul>
+            <li>app.engine("handlebars", exphbs());<br>
+                app.set("view engine", "handlebars");</li>
+        </ul>
+    </li>
+    <li>Suformuojama 'main.handlebars' byla pagal šabloną iš of. puslapio.</li>
+    <li>Po to į 'main' elementą {body} bus įkelti duomenys iš 'zmones'.</li>
+    <ul>
+        <li>Daroma taip:</li>
+        <li>Į app.get ("/zmones) suvedame:</li>
+        <li>res.render("zmones", { zmones });</li>
+        <li>kur 'zmones' - vaizdas, o {zmones} - duomenų objektas</li>
+        <li>Vad 'engine' viską padao automatiškai - sukuria html kodą i perkelia į {body} 'main'e.</li>
+    </ul>
+    <li>Tokiu pat principu pakeičiami klaidų ir atskirų žmonių edit html'ai</li>
+</ul> 
+</body>
+</html>

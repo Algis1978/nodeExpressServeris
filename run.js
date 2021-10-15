@@ -1,6 +1,6 @@
 import express from "express";
-import * as fs from "fs/promises";
-import handlebars from "handlebars";
+import exphbs from "express-handlebars";
+
 const port = 3000
 const web = "web";
 
@@ -27,8 +27,10 @@ const zmones = [
 ];
 
 const app = express();
+//Šitie du reikalingi, kad veiktų express-handlebars
+app.engine("handlebars", exphbs());
+app.set("view engine", "handlebars");
 
-// TIKRINADAMAS SITA TAISYKLE JEIGU JI ATITINKA REIKALAVIMA ZEMIAU NEBETIKRINA , KITU ATVEJU -TIKRINA ZEMIAU ESANCIAS TAISYKLES
 app.use(express.static(web, {
     index: "index.html"
     // GALIMA NURODYTI IR DAUGIAU REIKALAVIMU  INDEX, JEIGU PVZ, NETYCIA VIENO IS FAILU IESKOMU NEBUTU, TAIM REIKTU RASYTI index: ["index.html", "failas.html"]
@@ -48,13 +50,7 @@ app.get('/index.html', (req, res) => {
 });
 // SUKURIAMAS ENT POINTAS I ZMONIU SARA
 app.get('/zmones', async (req, res) => {
-    const html = await fs.readFile("./Handlebars/zmones.handlebars", {
-        encoding:"utf8"
-    });// nuskaitomas HTML kodas iš bylos
-
-const t = handlebars.compile(html);// Po to HTML kodas sukompiliuojamas 'handlebars' modulio.
-console.log(t({zmones}));
-    res.send(t({zmones}));//nusiunčiami duomenys
+    res.render("zmones", { zmones });//vietoj buvusio HTML bylos skaitymo/kodo
 });
 
 app.get('/zmogusEdit', (req, res) => {
@@ -69,25 +65,7 @@ app.get('/zmogusEdit', (req, res) => {
             return;
         }
     }
-    // jei zmogus yra undefined - vadinasi kursim nauja
-    // jei zmogus rodo i objekta - redaguosim
-    let html = "";
-    html += "<html>\r\n";
-    html += "<body>\r\n";
-    html += "<h1>Naujas žmogus</h1>\r\n";
-    html += `<form action="/zmogusSave" method="POST">\r\n`;
-    if (zmogus) {
-        html += `<input type="hidden" name="id" value="${zmogus.id}"><br>\r\n`;
-    }
-    html += `Vardas: <input type = "text" name="vardas" value="${(zmogus) ? zmogus.vardas : ""}"><br>\r\n`;
-    html += `Pavardė: <input type = "text" name="pavarde" value=${(zmogus) ? zmogus.pavarde : ""}><br>\r\n`;
-    html += `Alga: <input type = "text" name="alga" value=${(zmogus) ? zmogus.alga : ""}><br>\r\n`;
-    html += '<input type = "submit" value="Save"><br>\r\n';
-    html += '</form>\r\n';
-    html += `<a href = "/zmones">Atgal</a>\r\n`;
-    html += "</body>";
-    html += "</html>";
-    res.send(html);
+    res.render("zmogus", { zmogus });//vietoj buvusio HTML kodo/bylos skaitymo
 });
 
 app.post("/zmogusSave", (req, res) => {
@@ -113,16 +91,8 @@ app.post("/zmogusSave", (req, res) => {
         klaidos.push("Neteisingai ivesta alga");
     }
     if (klaidos.length > 0) {
-        let html = "";
-        html += "<html>\r\n";
-        html += "<body>\r\n";
-        html += "<h1>Blogi duomenys</h1>\r\n";
-        html += "<h2> " + klaidos + "</h2>\r\n";
-        html += `<a href = "/zmogusEdit${(zmogus)? "/?id=" + zmogus.id : ""}">Atgal</a>\r\n`;
-        html += "</body>";
-        html += "</html>";
-        res.send(html);
-    } else {
+        //vietoj buvusio HTML kodo/bylos skaitymo
+    res.render("blogiDuomenys", {klaidos, zmogus})    } else {
         if (zmogus) {
             zmogus.vardas = req.body.vardas;
             zmogus.pavarde = req.body.pavarde;
