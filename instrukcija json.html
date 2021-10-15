@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>JSON instrukcija su serveriu</h1>
+    <li>json yra teksto byla, kurioje aprašyta objektų struktūra.</li>
+    <li>Iš principo daro, ką darė express-handleriai, tas pats kitaip.</li>
+    <li>Sukūrus naują endpointą</li>
+    <ul>
+        <li>app.get ("/json/zmones", (req, res) => {<br>
+            //Nurodo naršyklei atsiunčiamo teksto formatą (json)<br>
+            res.set("Content-Type", "application/json")<br>
+            //JSON.stringify sukelia duomenis į JSON formatą.<br>
+            res.send(JSON.stringify(zmones))<br>
+            });</li>
+            <li>Į naršyklės užklausą "/json/zmones" bus nusiųsti objekto "zmones" duomenys.</li>
+    </ul>
+    <li>fetch funkcija parsisiunčia duomenis neperkranant html.</li>
+    <li>JS byloje (index.js) susikuriama funkcija (getZmones), kuri sufetchins duomenis iš "json/zmones"</li>
+    <li>HTML byloje sukuriamas mygtukas, kuris onclick iškvies šią funkciją.</li>
+    <li>Susikuriama funkcija, kuri išves duomenis į naršyklės langą (showZmones). Kartu sukuriami atskiri trnimo mygtukai.</li>
+    <li>Po to susikuriama funkcija, kuri neleis išvesti duomenų daugiau nei vieną kartą paspaudus mygtuką (cleanNode)</li>
+    <li>Po to sukuriama funkcija, kuri tvarkys delete mygtukus (deleteZmogus) per id identifikuotojus.</li>
+    <li>run.js byloje pridedamas app.delete("/json/zmones:id?,) metodas.</li>
+    <li>Susikuriama funkcija įrašų sukūrimui (addZmogus)</li>
+    <li>Pridedamas app.post metodas į run.js, neaišku, ko.</li>
+</body>
+</html>
